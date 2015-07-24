@@ -2,7 +2,7 @@ import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot
 from math import fabs
-from formulae import sigmoid, sigmoid_derivative, random_weight, get_color, adjust_line_to_perimeter_of_circle, layer_left_margin
+from formulae import sigmoid, sigmoid_derivative, random_weight, get_neuron_color, get_synapse_colour, adjust_line_to_perimeter_of_circle, layer_left_margin
 import parameters
 
 
@@ -17,7 +17,7 @@ class Synapse():
         self.y2 = y2
 
     def draw(self):
-        line = pyplot.Line2D((self.x1, self.x2), (self.y1, self.y2), lw=fabs(self.weight))
+        line = pyplot.Line2D((self.x1, self.x2), (self.y1, self.y2), lw=fabs(self.weight), color=get_synapse_colour(self.weight))
         pyplot.gca().add_line(line)
 
 
@@ -52,7 +52,7 @@ class Neuron():
         self.output = sigmoid(activity)
 
     def draw(self):
-        circle = pyplot.Circle((self.x, self.y), radius=parameters.neuron_radius, fill=True, color=get_color(self.output))
+        circle = pyplot.Circle((self.x, self.y), radius=parameters.neuron_radius, fill=True, color=get_neuron_color(self.output))
         pyplot.gca().add_patch(circle)
         for synapse in self.synapses:
             synapse.draw()

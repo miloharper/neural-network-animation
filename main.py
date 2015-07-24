@@ -1,8 +1,6 @@
-import matplotlib
-matplotlib.use("Agg")
-from matplotlib import pyplot, animation
 from neural_network import NeuralNetwork
 from formulae import calculate_average_error
+from video import generate_writer, new_frame, annotate_frame
 import parameters
 
 
@@ -30,9 +28,7 @@ if __name__ == "__main__":
 
     # Generate a video of the neural network learning
     print "Generating a video of the neural network learning..."
-    FFMpegWriter = animation.writers['ffmpeg']
-    writer = FFMpegWriter(fps=parameters.frames_per_second, metadata=parameters.metadata)
-    fig = pyplot.figure()
+    fig, writer = generate_writer()
     with writer.saving(fig, parameters.file_name, 100):
         cumulative_error = None
         for i in xrange(parameters.training_iterations):
@@ -40,15 +36,10 @@ if __name__ == "__main__":
             cumulative_error = 0
             for e, example in enumerate(examples):
                 cumulative_error += network.train(example)
-                if i % parameters.iterations_per_frame == 0 or i == 1:
-                    pyplot.clf()
-                    pyplot.xlim(0, parameters.width)
-                    pyplot.ylim(0, parameters.height)
+                if i % parameters.iterations_per_frame == 1:
+                    new_frame()
                     network.draw()
-                    pyplot.text(1, parameters.height - 1, "Iteration " + str(i + 1), fontsize=12)
-                    pyplot.text(1, parameters.height - 2, "Example " + str(e + 1), fontsize=12)
-                    if average_error:
-                        pyplot.text(1, parameters.height - 3, "Average Error " + str(average_error) + "%", fontsize=12)
+                    annotate_frame(i, e, average_error)
                     writer.grab_frame()
     print "Success! Open the file " + parameters.file_name + " to view the video."
 

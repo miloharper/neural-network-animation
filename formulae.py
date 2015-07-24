@@ -15,11 +15,15 @@ def random_weight():
     return 2 * random.random() - 1
 
 
-def get_color(output):
-    if output > 0:
-        return output, output, 0
+def get_neuron_color(output):
+    return output, output, 0
+
+
+def get_synapse_colour(weight):
+    if weight > 0:
+        return 1, 0, 0
     else:
-        return fabs(output), 0, 0
+        return 0, 1, 0
 
 
 def adjust_line_to_perimeter_of_circle(x1, x2, y1, y2):
