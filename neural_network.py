@@ -85,12 +85,10 @@ class Layer():
 
 
 class NeuralNetwork():
-    def __init__(self):
+    def __init__(self, requested_layers):
         self.layers = []
-
-    def add_layer(self, number_of_neurons):
-        layer = Layer(self, number_of_neurons)
-        self.layers.append(layer)
+        for number_of_neurons in requested_layers:
+            self.layers.append(Layer(self, number_of_neurons))
 
     def train(self, example):
         error = example.output - self.think(example.inputs)
