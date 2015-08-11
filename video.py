@@ -1,5 +1,5 @@
 import parameters
-from matplotlib import pyplot, animation
+from matplotlib import pyplot, animation, rcParams
 
 
 def generate_writer():
@@ -13,6 +13,8 @@ def generate_writer():
     axis.set_axis_bgcolor('black')
     axis.axes.get_xaxis().set_visible(False)
     axis.axes.get_yaxis().set_visible(False)
+    rcParams['font.size'] = 12
+    rcParams['text.color'] = 'white'
     return fig, writer
 
 
@@ -20,16 +22,20 @@ def new_frame():
     pyplot.cla()
 
 
-def annotate_frame(i, e, average_error):
-    pyplot.text(1, parameters.height - 1, "Iteration " + str(i + 1), fontsize=12, color='white')
-    pyplot.text(1, parameters.height - 2, "Example " + str(e + 1), fontsize=12, color='white')
+def annotate_frame(i, e, average_error, example):
+    pyplot.text(1, parameters.height - 1, "Iteration #" + str(i + 1))
+    pyplot.text(1, parameters.height - 2, "Training example #" + str(e + 1))
+    pyplot.text(1, parameters.output_y_position, "Desired output:")
+    pyplot.text(1, parameters.output_y_position - 1, str(example.output))
+    pyplot.text(1, parameters.bottom_margin + 1, "Inputs:")
+    pyplot.text(1, parameters.bottom_margin, str(example.inputs))
     if average_error:
-        pyplot.text(7, parameters.height - 1, "Average Error " + str(average_error) + "%", fontsize=12, color='white')
         error_bar(average_error)
 
 
 def error_bar(average_error):
-    border = pyplot.Rectangle((7, parameters.height - 3), 10, 1, color='white', fill=False)
+    pyplot.text(parameters.error_bar_x_position, parameters.height - 1, "Average Error " + str(average_error) + "%")
+    border = pyplot.Rectangle((parameters.error_bar_x_position, parameters.height - 3), 10, 1, color='white', fill=False)
     pyplot.gca().add_patch(border)
-    rectangle = pyplot.Rectangle((7, parameters.height - 3), 10 * average_error / 100, 1, color='red')
+    rectangle = pyplot.Rectangle((parameters.error_bar_x_position, parameters.height - 3), 10 * average_error / 100, 1, color='red')
     pyplot.gca().add_patch(rectangle)

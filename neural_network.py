@@ -2,7 +2,7 @@ import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot
 from math import fabs
-from formulae import sigmoid, sigmoid_derivative, random_weight, get_neuron_color, get_synapse_colour, adjust_line_to_perimeter_of_circle, layer_left_margin
+from formulae import sigmoid, sigmoid_derivative, random_weight, get_synapse_colour, adjust_line_to_perimeter_of_circle, layer_left_margin
 import parameters
 
 
@@ -10,6 +10,7 @@ class Synapse():
     def __init__(self, input_neuron_index, x1, x2, y1, y2):
         self.input_neuron_index = input_neuron_index
         self.weight = random_weight()
+        self.signal = 0
         x1, x2, y1, y2 = adjust_line_to_perimeter_of_circle(x1, x2, y1, y2)
         self.x1 = x1
         self.x2 = x2
@@ -18,7 +19,9 @@ class Synapse():
 
     def draw(self):
         line = pyplot.Line2D((self.x1, self.x2), (self.y1, self.y2), lw=fabs(self.weight), color=get_synapse_colour(self.weight), zorder=1)
+        outer_glow = pyplot.Line2D((self.x1, self.x2), (self.y1, self.y2), lw=(fabs(self.weight) * 2), color=get_synapse_colour(self.weight), zorder=2, alpha=self.signal * 0.4)
         pyplot.gca().add_line(line)
+        pyplot.gca().add_line(outer_glow)
 
 
 class Neuron():
@@ -37,23 +40,25 @@ class Neuron():
 
     def train(self, previous_layer):
         for synapse in self.synapses:
-            # Find the strength of the input signal from the neuron in the layer below
-            synapse_input = previous_layer.neurons[synapse.input_neuron_index].output
             # Propagate the error back down the synapse to the neuron in the layer below
             previous_layer.neurons[synapse.input_neuron_index].error += self.error * sigmoid_derivative(self.output) * synapse.weight
             # Adjust the synapse weight
-            synapse.weight += synapse_input * self.error * sigmoid_derivative(self.output)
+            synapse.weight += synapse.signal * self.error * sigmoid_derivative(self.output)
         return previous_layer
 
     def think(self, previous_layer):
         activity = 0
         for synapse in self.synapses:
-            activity += synapse.weight * previous_layer.neurons[synapse.input_neuron_index].output
+            synapse.signal = previous_layer.neurons[synapse.input_neuron_index].output
+            activity += synapse.weight * synapse.signal
         self.output = sigmoid(activity)
 
     def draw(self):
-        circle = pyplot.Circle((self.x, self.y), radius=parameters.neuron_radius, fill=True, color=get_neuron_color(self.output), zorder=2)
+        circle = pyplot.Circle((self.x, self.y), radius=parameters.neuron_radius, fill=True, color=(0.2, 0.2, 0), zorder=3)
+        outer_glow = pyplot.Circle((self.x, self.y), radius=parameters.neuron_radius * 1.5, fill=True, color=(self.output, self.output, 0), zorder=4, alpha=self.output * 0.5)
         pyplot.gca().add_patch(circle)
+        pyplot.gca().add_patch(outer_glow)
+        pyplot.text(self.x + 0.8, self.y, round(self.output, 2))
         for synapse in self.synapses:
             synapse.draw()
 

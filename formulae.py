@@ -15,10 +15,6 @@ def random_weight():
     return 2 * random.random() - 1
 
 
-def get_neuron_color(output):
-    return output, output, 0
-
-
 def get_synapse_colour(weight):
     if weight > 0:
         return 1, 0, 0

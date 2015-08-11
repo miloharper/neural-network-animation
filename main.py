@@ -37,7 +37,7 @@ if __name__ == "__main__":
                 if i % parameters.iterations_per_frame == 1:
                     new_frame()
                     network.draw()
-                    annotate_frame(i, e, average_error)
+                    annotate_frame(i, e, average_error, example)
                     writer.grab_frame()
             average_error = calculate_average_error(cumulative_error, len(examples))
     print "Success! Open the file " + parameters.file_name + " to view the video."
