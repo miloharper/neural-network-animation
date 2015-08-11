@@ -1,6 +1,6 @@
 from neural_network import NeuralNetwork
 from formulae import calculate_average_error
-from video import generate_writer, new_frame, annotate_frame
+from video import generate_writer, new_frame, annotate_frame, take_still
 import parameters
 
 
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     print "There will be " + str(parameters.training_iterations * len(examples) / parameters.iterations_per_frame) + " frames."
     print "This may take a long time. Please wait..."
     fig, writer = generate_writer()
-    with writer.saving(fig, parameters.file_name, 100):
+    with writer.saving(fig, parameters.video_file_name, 100):
         for i in xrange(parameters.training_iterations):
             cumulative_error = 0
             for e, example in enumerate(examples):
@@ -40,9 +40,13 @@ if __name__ == "__main__":
                     annotate_frame(i, e, average_error, example)
                     writer.grab_frame()
             average_error = calculate_average_error(cumulative_error, len(examples))
-    print "Success! Open the file " + parameters.file_name + " to view the video."
+    print "Success! Open the file " + parameters.video_file_name + " to view the video."
 
     # Consider a new situation
     new_situation = [1, 1, 0]
     print "Considering a new situation " + str(new_situation) + "?"
     print network.think(new_situation)
+    new_frame()
+    network.draw()
+    take_still()
+    print "Success! Open the file " + parameters.video_file_name + " to view the image."

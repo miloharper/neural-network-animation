@@ -39,3 +39,7 @@ def error_bar(average_error):
     pyplot.gca().add_patch(border)
     rectangle = pyplot.Rectangle((parameters.error_bar_x_position, parameters.height - 3), 10 * average_error / 100, 1, color='red')
     pyplot.gca().add_patch(rectangle)
+
+
+def take_still():
+    pyplot.savefig(parameters.image_file_name)
