@@ -12,9 +12,9 @@ output_y_position = 15
 
 # Parameters for the video
 frames_per_second = 1
-iterations_per_frame = 500
+iterations_per_frame = 3000
 video_file_name = "neural_network.mp4"
 metadata = dict(artist="Milo Spencer-Harper", title="Neural Network")
 
 # Parameters for training the network
-training_iterations = 10000
+training_iterations = 60000
