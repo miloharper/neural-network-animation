@@ -32,6 +32,7 @@ if __name__ == "__main__":
 
     # Generate an image of the neural network before training
     print "Generating an image of the neural network before"
+    network.do_not_think()
     network.draw()
     take_still("neural_network_before.png")
 
@@ -53,7 +54,7 @@ if __name__ == "__main__":
 
     # Generate an image of the neural network after training
     print "Generating an image of the neural network after"
-    network.think([0, 0, 0])
+    network.do_not_think()
     network.draw()
     take_still("neural_network_after.png")
 

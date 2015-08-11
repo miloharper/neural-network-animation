@@ -104,6 +104,11 @@ class NeuralNetwork():
                 self.layers[l - 1] = neuron.train(self.layers[l - 1])
         return fabs(error)
 
+    def do_not_think(self):
+        for layer in self.layers:
+            for neuron in layer.neurons:
+                neuron.output = 0
+
     def think(self, inputs):
         for layer in self.layers:
             if layer.is_input_layer:
