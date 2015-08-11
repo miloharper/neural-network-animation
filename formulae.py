@@ -17,9 +17,9 @@ def random_weight():
 
 def get_synapse_colour(weight):
     if weight > 0:
-        return 1, 0, 0
-    else:
         return 0, 1, 0
+    else:
+        return 1, 0, 0
 
 
 def adjust_line_to_perimeter_of_circle(x1, x2, y1, y2):
