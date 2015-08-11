@@ -1,6 +1,6 @@
 from neural_network import NeuralNetwork
 from formulae import calculate_average_error
-from video import generate_writer, new_frame, annotate_frame, take_still
+from video import generate_writer, annotate_frame, take_still
 import parameters
 
 
@@ -35,7 +35,6 @@ if __name__ == "__main__":
             for e, example in enumerate(examples):
                 cumulative_error += network.train(example)
                 if i % parameters.iterations_per_frame == 1:
-                    new_frame()
                     network.draw()
                     annotate_frame(i, e, average_error, example)
                     writer.grab_frame()
@@ -46,7 +45,6 @@ if __name__ == "__main__":
     new_situation = [1, 1, 0]
     print "Considering a new situation " + str(new_situation) + "?"
     print network.think(new_situation)
-    new_frame()
     network.draw()
     take_still()
     print "Success! Open the file " + parameters.video_file_name + " to view the image."

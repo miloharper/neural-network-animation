@@ -114,6 +114,7 @@ class NeuralNetwork():
         return self.layers[-1].neurons[0].output
 
     def draw(self):
+        pyplot.cla()
         for layer in self.layers:
             layer.draw()
 
