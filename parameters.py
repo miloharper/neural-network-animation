@@ -16,8 +16,5 @@ iterations_per_frame = 500
 video_file_name = "neural_network.mp4"
 metadata = dict(artist="Milo Spencer-Harper", title="Neural Network")
 
-# Parameters for the image
-image_file_name = "neural_network.png"
-
 # Parameters for training the network
 training_iterations = 10000

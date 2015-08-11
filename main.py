@@ -27,11 +27,18 @@ if __name__ == "__main__":
                 TrainingExample([1, 1, 1], 0),
                 TrainingExample([0, 0, 0], 0)]
 
+    # Create a video and image writer
+    fig, writer = generate_writer()
+
+    # Generate an image of the neural network before training
+    print "Generating an image of the neural network before"
+    network.draw()
+    take_still("neural_network_before.png")
+
     # Generate a video of the neural network learning
     print "Generating a video of the neural network learning."
     print "There will be " + str(parameters.training_iterations * len(examples) / parameters.iterations_per_frame) + " frames."
     print "This may take a long time. Please wait..."
-    fig, writer = generate_writer()
     with writer.saving(fig, parameters.video_file_name, 100):
         for i in xrange(parameters.training_iterations):
             cumulative_error = 0
@@ -44,10 +51,16 @@ if __name__ == "__main__":
             average_error = calculate_average_error(cumulative_error, len(examples))
     print "Success! Open the file " + parameters.video_file_name + " to view the video."
 
+    # Generate an image of the neural network after training
+    print "Generating an image of the neural network after"
+    network.think([0, 0, 0])
+    network.draw()
+    take_still("neural_network_after.png")
+
     # Consider a new situation
     new_situation = [1, 1, 0]
     print "Considering a new situation " + str(new_situation) + "?"
     print network.think(new_situation)
     network.draw()
-    take_still()
-    print "Success! Open the file " + parameters.video_file_name + " to view the image."
+    take_still("neural_network_new_situation.png")
+

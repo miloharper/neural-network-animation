@@ -37,5 +37,5 @@ def error_bar(average_error):
     pyplot.gca().add_patch(rectangle)
 
 
-def take_still():
-    pyplot.savefig(parameters.image_file_name)
+def take_still(image_file_name):
+    pyplot.savefig(image_file_name)
