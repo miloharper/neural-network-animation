@@ -9,3 +9,6 @@ light represent neural activity.
 
 To run the program use the command "python main.py". It will generate a mp4 file in the same folder.
 
+You can read more about it and watch the video here:
+https://medium.com/@miloharper/how-to-generate-a-video-of-a-neural-network-learning-in-python-62f5c520e85c
+
