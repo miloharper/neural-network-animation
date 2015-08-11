@@ -17,7 +17,7 @@ class Synapse():
         self.y2 = y2
 
     def draw(self):
-        line = pyplot.Line2D((self.x1, self.x2), (self.y1, self.y2), lw=fabs(self.weight), color=get_synapse_colour(self.weight))
+        line = pyplot.Line2D((self.x1, self.x2), (self.y1, self.y2), lw=fabs(self.weight), color=get_synapse_colour(self.weight), zorder=1)
         pyplot.gca().add_line(line)
 
 
@@ -52,7 +52,7 @@ class Neuron():
         self.output = sigmoid(activity)
 
     def draw(self):
-        circle = pyplot.Circle((self.x, self.y), radius=parameters.neuron_radius, fill=True, color=get_neuron_color(self.output))
+        circle = pyplot.Circle((self.x, self.y), radius=parameters.neuron_radius, fill=True, color=get_neuron_color(self.output), zorder=2)
         pyplot.gca().add_patch(circle)
         for synapse in self.synapses:
             synapse.draw()
