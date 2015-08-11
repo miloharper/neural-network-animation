@@ -1,5 +1,5 @@
 from neural_network import NeuralNetwork
-from formulae import calculate_average_error
+from formulae import calculate_average_error, seed_random_number_generator
 from video import generate_writer, annotate_frame, take_still
 import parameters
 
@@ -10,6 +10,9 @@ class TrainingExample():
         self.output = output
 
 if __name__ == "__main__":
+
+    # Seed the random number generator
+    seed_random_number_generator()
 
     # Assemble a neural network, with 3 neurons in the first layer
     # 4 neurons in the second layer and 1 neuron in the third layer

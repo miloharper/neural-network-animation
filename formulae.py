@@ -1,5 +1,5 @@
 from numpy import exp, random
-from math import fabs, atan, sin, cos
+from math import atan, sin, cos
 import parameters
 
 
@@ -9,6 +9,10 @@ def sigmoid(x):
 
 def sigmoid_derivative(x):
     return x * (1 - x)
+
+
+def seed_random_number_generator():
+    random.seed(1)
 
 
 def random_weight():
