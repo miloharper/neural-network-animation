@@ -19,7 +19,7 @@ def generate_writer():
 
 
 def annotate_frame(i, e, average_error, example):
-    pyplot.text(1, parameters.height - 1, "Iteration #" + str(i + 1))
+    pyplot.text(1, parameters.height - 1, "Iteration #" + str(i))
     pyplot.text(1, parameters.height - 2, "Training example #" + str(e + 1))
     pyplot.text(1, parameters.output_y_position, "Desired output:")
     pyplot.text(1, parameters.output_y_position - 1, str(example.output))

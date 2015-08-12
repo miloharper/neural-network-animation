@@ -38,14 +38,14 @@ if __name__ == "__main__":
 
     # Generate a video of the neural network learning
     print "Generating a video of the neural network learning."
-    print "There will be " + str(parameters.training_iterations * len(examples) / parameters.iterations_per_frame) + " frames."
+    print "There will be " + str(len(examples) * len(parameters.show_iterations)) + " frames."
     print "This may take a long time. Please wait..."
     with writer.saving(fig, parameters.video_file_name, 100):
-        for i in xrange(parameters.training_iterations):
+        for i in range(1, parameters.training_iterations + 1):
             cumulative_error = 0
             for e, example in enumerate(examples):
                 cumulative_error += network.train(example)
-                if i % parameters.iterations_per_frame == 1:
+                if i in parameters.show_iterations:
                     network.draw()
                     annotate_frame(i, e, average_error, example)
                     writer.grab_frame()
