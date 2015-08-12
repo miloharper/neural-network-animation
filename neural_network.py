@@ -108,6 +108,8 @@ class NeuralNetwork():
         for layer in self.layers:
             for neuron in layer.neurons:
                 neuron.output = 0
+                for synapse in neuron.synapses:
+                    synapse.signal = 0
 
     def think(self, inputs):
         for layer in self.layers:
